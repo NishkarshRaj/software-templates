@@ -51,6 +51,7 @@ spec:
           ui:options:
             allowedHosts:
               - github.com
+              - dev.azure.com
 
   steps:
     - id: template
@@ -69,13 +70,21 @@ spec:
           destination: ${{ parameters.repoUrl | parseRepoUrl }}
           http_port: 8080
 
+    # - id: publish
+    #   name: Publish
+    #   action: publish:github
+    #   input:
+    #     allowedHosts: ["github.com"]
+    #     description: This is ${{ parameters.component_id }}
+    #     repoUrl: ${{ parameters.repoUrl }}
+
     - id: publish
-      name: Publish
-      action: publish:github
+      name: Publish to Azure
+      action: publish:azure
       input:
-        allowedHosts: ["github.com"]
-        description: This is ${{ parameters.component_id }}
         repoUrl: ${{ parameters.repoUrl }}
+        allowedHosts: ["dev.azure.com"]
+        description: "Lorem Ipsum"
 
     - id: register
       name: Register
